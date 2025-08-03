@@ -1,8 +1,8 @@
-import React, { useCallback, useRef } from 'react';
-import { useStocks } from '../hooks/useStocks';
-import SearchBar from '../components/SearchBar';
-import StockCard from '../components/StockCard';
-import type { Stock } from '../types/index.js';
+import React, { useCallback, useRef } from "react";
+import { useStocks } from "../hooks/useStocks";
+import SearchBar from "../components/SearchBar";
+import StockCard from "../components/StockCard";
+import type { Stock } from "../types/index.js";
 
 const ExploreScreen: React.FC = () => {
   const {
@@ -23,22 +23,22 @@ const ExploreScreen: React.FC = () => {
   const lastStockRef = useCallback(
     (node: HTMLDivElement) => {
       if (loading || isFetchingNextPage) return;
-      
+
       if (observerRef.current) observerRef.current.disconnect();
-      
+
       observerRef.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasNextPage) {
           loadMore();
         }
       });
-      
+
       if (node) observerRef.current.observe(node);
     },
     [loading, isFetchingNextPage, hasNextPage, loadMore]
   );
 
   const handleStockClick = (stock: Stock) => {
-    console.log('Stock clicked:', stock);
+    console.log("Stock clicked:", stock);
     // TODO: Navigate to stock detail page or show modal
   };
 
@@ -56,18 +56,19 @@ const ExploreScreen: React.FC = () => {
         </div>
 
         <div className="mb-10">
-          <SearchBar 
+          <SearchBar
             onSearch={updateSearch}
             placeholder="Search stocks by ticker or company name..."
           />
-          
+
           {searchQuery && (
             <div className="flex justify-between items-center p-4 mt-4 bg-white rounded-xl shadow-sm">
               <span className="text-sm font-medium text-gray-600">
-                {stocks.length} result{stocks.length !== 1 ? 's' : ''} for "{searchQuery}"
+                {stocks.length} result{stocks.length !== 1 ? "s" : ""} for "
+                {searchQuery}"
               </span>
-              <button 
-                onClick={clearSearch} 
+              <button
+                onClick={clearSearch}
                 className="px-3 py-1 text-sm font-semibold rounded-lg transition-colors text-primary-600 hover:text-primary-700 hover:bg-primary-50"
               >
                 Clear Search
@@ -80,7 +81,9 @@ const ExploreScreen: React.FC = () => {
           {hasError ? (
             <div className="flex justify-center items-center min-h-96">
               <div className="p-8 max-w-md text-center bg-white rounded-2xl shadow-lg">
-                <h3 className="mb-4 text-2xl font-semibold text-gray-900">Something went wrong</h3>
+                <h3 className="mb-4 text-2xl font-semibold text-gray-900">
+                  Something went wrong
+                </h3>
                 <p className="mb-6 text-gray-600">{errorMessage}</p>
                 <button onClick={handleRetry} className="btn-primary">
                   Try Again
@@ -97,12 +100,13 @@ const ExploreScreen: React.FC = () => {
           ) : stocks.length === 0 ? (
             <div className="flex justify-center items-center min-h-96">
               <div className="p-8 max-w-md text-center bg-white rounded-2xl shadow-lg">
-                <h3 className="mb-4 text-2xl font-semibold text-gray-900">No stocks found</h3>
+                <h3 className="mb-4 text-2xl font-semibold text-gray-900">
+                  No stocks found
+                </h3>
                 <p className="mb-6 text-gray-600">
-                  {searchQuery 
+                  {searchQuery
                     ? `No stocks match your search for "${searchQuery}"`
-                    : 'No stocks available at the moment'
-                  }
+                    : "No stocks available at the moment"}
                 </p>
                 {searchQuery && (
                   <button onClick={clearSearch} className="btn-primary">
@@ -118,10 +122,7 @@ const ExploreScreen: React.FC = () => {
                   key={`${stock.ticker}-${index}`}
                   ref={index === stocks.length - 1 ? lastStockRef : undefined}
                 >
-                  <StockCard 
-                    stock={stock} 
-                    onClick={handleStockClick}
-                  />
+                  <StockCard stock={stock} onClick={handleStockClick} />
                 </div>
               ))}
             </div>
@@ -139,4 +140,4 @@ const ExploreScreen: React.FC = () => {
   );
 };
 
-export default ExploreScreen; 
+export default ExploreScreen;

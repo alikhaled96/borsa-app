@@ -40,8 +40,14 @@ export default {
         "fade-in-up": "fadeInUp 0.6s ease-out",
         "pulse-slow": "pulse 2s infinite",
         "spin-slow": "spin 1s linear infinite",
+        "gradient-background":
+          "gradient-move 10s ease-in-out infinite alternate",
       },
       keyframes: {
+        "gradient-move": {
+          "0%": { "background-position": "0% 50%" },
+          "100%": { "background-position": "100% 50%" },
+        },
         fadeInUp: {
           "0%": {
             opacity: "0",
